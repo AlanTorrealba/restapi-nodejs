@@ -39,8 +39,10 @@ export const deleteEmployees = async (req, res) =>{
 
 export const updateEmployees = async (req, res) =>{
     const {id} = req.params
-    const {name, salaray} = req.body
+    const {name, salary} = req.body
 
-    const [result] = await pool.query('UPDATE employee SET name= ?, salaray = ? WHERE id = ?',[name, salaray, id])
+    const [result] = await pool.query('UPDATE employee SET name= ?, salary = ? WHERE id = ?',[name, salary, id])
 
+    console.log(result)
+    res.json("recivido")
 }
