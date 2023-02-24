@@ -10,7 +10,7 @@ router.get('/employees/:id', getEmployee)
 
 router.post('/employees',createEmployees)
 
-router.put('/employee/:id',updateEmployees)
+router.patch('/employee/:id',updateEmployees)
 
 router.delete('/employees/:id',deleteEmployees)
 
