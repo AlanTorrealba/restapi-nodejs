@@ -1,13 +1,5 @@
-import  express  from "express";
-import indexrouter from './routes/index.routes.js';
-import employeesRoutes from './routes/employees.routes.js';
-const app = express()
+import app from './app.js'
+import { PORT } from './config.js';
 
-app.use(express.json())
-
-app.use(indexrouter)
-app.use('/api', employeesRoutes)
-
-
-app.listen(3000)
-console.log("escuchando en el puerto 3000")
+app.listen(PORT);
+console.log("escuchando en el puerto", PORT);
