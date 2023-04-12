@@ -3,15 +3,21 @@ import cors from "cors";
 import indexrouter from "./routes/index.routes.js";
 import employeesRoutes from "./routes/employees.routes.js";
 import userRoutes from "./routes/user.routes.js";
+import cookieParser from "cookie-parser";
+
 import  { PORT } from './config.js'
 
 
 
+const corsOptions ={
+  origin:'http://localhost:5173', 
+  credentials:true,            //access-control-allow-credentials:true
 
+}
 const app = express();
-
-app.use(cors())
+app.use(cors(corsOptions))
 app.use(express.json());
+app.use(cookieParser());
 
 app.use(indexrouter);
 app.use("/api", employeesRoutes);

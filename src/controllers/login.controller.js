@@ -1,87 +1,18 @@
 import { pool } from "../db.js";
-import jwt from "jsonwebtoken";
-import { serialize } from "cookie";
 
-export const getUser = async (req, res) => {
-  console.log(req.body);
-
-  try {
-    const [rows] = await pool.query("SELECT * FROM user");
-    res.json(rows);
-  } catch (error) {
-    return res.status(500).json({
-      message: "Somethin goes wrong",
-    });
-  }
-};
 export const loginUser = async (req, res) => {
-  const { username, password } = req.body;
 
-  if (username === "alan" && password === "1234") {
-    //aqui guardo la variable para devolverla al front
-    const token = jwt.sign(
-      {
-        //estos datos deberian tomarse de la base de datos
-        exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 30, //Tiempo para expirar el token
-        username: "alan",
-        email: "alan@alan.com",
-      },
-      "secret"
-    ); //esta llave secrete deberia ser una vatiable de entorno
+      console.log(req.body)
 
-    //serializo el token para  enviarlo al front
-
-    // const serialized = serialize('myTokenName', token,{
-    //   //confirguro mi cookie
-    //   httpOnly: true,
-    //   secure : process.env.NODE_ENV ==='production',
-    //   sameSite: 'none',
-    //   maxAge: 1000*60*60*24*30,
-    //   path: '/'
-    // });
-    
-      //establesco una cookie con el token serializado
-
-     // res.setHeader('Set-Cookie', serialized);
-    
-    //  console.log(token)
-
-    
-    res.cookie('myToken', token, {
-      maxAge: 1000*60*60*24*30, // Duración de una hora
-      httpOnly: true, // Protocolo http
-      secure: process.env.NODE_ENV ==='production', // Conexión segura https
-      sameSite: 'lax', // No se enviará en peticiones cross-site
-      path: '/'
-    });
-    
-
-  return res.status(200).json("is Ok") ;
-  }
-  return res.status(401).json({error:'Invalid'});
+//   try {
+//     const [rows] = await pool.query("SELECT * FROM user");
+//     res.json(rows);
+//   } catch (error) {
+//     return res.status(500).json({
+//       message: "Somethin goes wrong",
+//     });
+//   }
 };
-
-
-
-
-export const getProfile = async (req, res) =>{
-  const {myToken} = req.cookies
-
-
-  try {
-  const user = jwt.verify(myToken, "secret")
-  return res.json({email : user.email, user: user.username})
-  } catch (error) {
-    res.status(401).json({error:'invalid Token'})
-  }
-  
-
-
-}
-
-
-
-
 // export const getEmployee = async (req, res) => {
 //   const id = req.params.id;
 //   try {
