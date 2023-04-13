@@ -1,5 +1,5 @@
 import { pool } from "../db.js";
-import jwt from "jsonwebtoken";
+import jwt, { verify } from "jsonwebtoken";
 import { serialize } from "cookie";
 
 export const getUser = async (req, res) => {
@@ -66,6 +66,9 @@ export const loginUser = async (req, res) => {
 
 export const getProfile = async (req, res) =>{
   const {myToken} = req.cookies
+  if (!myToken) {
+    return res.status(401).json({error:'noToken'})
+  }
 
 
   try {
@@ -75,6 +78,28 @@ export const getProfile = async (req, res) =>{
     res.status(401).json({error:'invalid Token'})
   }
   
+
+
+}
+export const deleteProfile = async (req, res) =>{
+  const {myToken} = req.cookies
+
+
+  
+  if (!myToken) {
+    return res.status(401).json({error:'noToken'})
+  }
+
+
+try {
+  verify(myToken, "secret")  
+  res.clearCookie('myToken');
+  res.status(200).json('ok')
+
+} catch (error) {
+  return res.status(401).json({error:'InvalidToken'})
+}
+
 
 
 }
