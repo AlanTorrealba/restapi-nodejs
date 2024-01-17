@@ -15,7 +15,6 @@ export const getPedidos = async (req, res) => {
   LEFT JOIN Repartidores ON Pedidos.repartidor_id = Repartidores.repartidor_id
   ORDER BY Pedidos.pedido_id ASC;  -- Ordenar por pedido_id de forma ascendente
   `)
-      console.log(rows)
       rows != [] ? res.json(rows) : res.json(false);
     } catch (error) {
       return res.status(500).json({

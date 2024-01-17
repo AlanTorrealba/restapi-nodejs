@@ -6,10 +6,8 @@
    
     const user = req.query.username;
     const password = req.query.password;
-    console.log(user, password)
     try {
       const [rows] = await pool.query("SELECT * FROM usuarios where nombre = ? and contrasena = ?", [user, password ]);
-      console.log(rows)
       rows != [] ? res.json(rows) : res.json(false);
       
     } catch (error) {
