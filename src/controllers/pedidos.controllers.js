@@ -8,7 +8,8 @@ export const getPedidos = async (req, res) => {
       Clientes.nombre AS nombre_cliente,
       Usuarios.nombre AS nombre_usuario,
       Repartidores.nombre AS nombre_repartidor,
-      Pedidos.estatus_pedido
+      Pedidos.estatus_pedido,
+      Pedidos.estatus
   FROM Pedidos
   JOIN Clientes ON Pedidos.cliente_id = Clientes.cliente_id
   JOIN Usuarios ON Pedidos.usuario_id = Usuarios.usuario_id
@@ -52,8 +53,8 @@ export const deletePedidos = async (req, res) => {
   try {
     const id = req.params.id;
     const [result] = await pool.query(
-      "UPDATE Pedidos SET estatus_pedido = ? WHERE pedido_id = ?",
-      ["eliminado", id]
+      "UPDATE Pedidos SET estatus = ?, estatus_pedido = ? WHERE pedido_id = ?",
+      [0, "eliminado" , id]
     );
 
     if (result.affectedRows <= 0) {
