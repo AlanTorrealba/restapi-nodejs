@@ -1,5 +1,4 @@
 import { pool } from "../db.js";
-
 export const getPedidos = async (req, res) => {
   try {
     const [rows] = await pool.query(`
@@ -23,7 +22,6 @@ export const getPedidos = async (req, res) => {
     });
   }
 };
-
 export const postPedidos = async (req, res) => {
   const { cliente, repartidor, usuario } = req.body.params;
   console.log("req:", req.body);
@@ -32,29 +30,28 @@ export const postPedidos = async (req, res) => {
       "INSERT INTO Pedidos (cliente_id, usuario_id, repartidor_id, estatus_pedido) VALUES (?, ?, ?, ?)",
       [cliente, usuario, repartidor, "Nuevo"]
     );
-    // console.log("res:",res)
-    // console.log("row", rows)
-    // res.json("Pedido creado exitosamente");
     res.status(200).json({
       success: true,
       data: rows,
-      message: 'Pedido creado exitosamente',
+      message: "Pedido creado exitosamente",
     });
   } catch (error) {
-    console.error('Error en la inserción:', error);
+    console.error("Error en la inserción:", error);
     return res.status(500).json({
       success: false,
       message: "Somethin goes wrong",
     });
   }
 };
-
+export const patchPedidos = async (req, res) =>{
+return "hola"
+}
 export const deletePedidos = async (req, res) => {
   try {
     const id = req.params.id;
     const [result] = await pool.query(
       "UPDATE Pedidos SET estatus = ?, estatus_pedido = ? WHERE pedido_id = ?",
-      [0, "eliminado" , id]
+      [0, "eliminado", id]
     );
 
     if (result.affectedRows <= 0) {

@@ -3,7 +3,6 @@ import { pool } from "../db.js";
 export const getRepartidor = async (req, res) => {
   try {
     const [rows] = await pool.query("SELECT * FROM repartidores");
-    console.log(rows)
     res.status(200).json({
         success: true,
         rows,
