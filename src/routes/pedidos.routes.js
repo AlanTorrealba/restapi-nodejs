@@ -4,7 +4,7 @@ const router = Router();
 
 router.get("/pedidos", getPedidos);
 router.post("/pedidos", postPedidos);
-router.patch("/pedidos", patchPedidos )
+router.patch("/pedidos/:id", patchPedidos )
 router.delete("/pedidos/:id", deletePedidos);
 
 export default router;

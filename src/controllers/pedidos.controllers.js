@@ -24,7 +24,6 @@ export const getPedidos = async (req, res) => {
 };
 export const postPedidos = async (req, res) => {
   const { cliente, repartidor, usuario } = req.body.params;
-  console.log("req:", req.body);
   try {
     const [rows] = await pool.query(
       "INSERT INTO Pedidos (cliente_id, usuario_id, repartidor_id, estatus_pedido) VALUES (?, ?, ?, ?)",
@@ -43,9 +42,27 @@ export const postPedidos = async (req, res) => {
     });
   }
 };
-export const patchPedidos = async (req, res) =>{
-return "hola"
-}
+export const patchPedidos = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const [result] = await pool.query(
+      "UPDATE Pedidos SET estatus = ?, estatus_pedido = ? WHERE pedido_id = ?",
+      [1, "Nuevo", id]
+    );
+
+    if (result.affectedRows <= 0) {
+      return res.status(404).json({
+        message: "Pedido not found",
+      });
+    }
+
+    res.json("Pedido reciclado exitosamente");
+  } catch (error) {
+    return res.status(500).json({
+      message: "Something went wrong",
+    });
+  }
+};
 export const deletePedidos = async (req, res) => {
   try {
     const id = req.params.id;
