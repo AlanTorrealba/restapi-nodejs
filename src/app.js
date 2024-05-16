@@ -5,6 +5,7 @@ import employeesRoutes from "./routes/employees.routes.js";
 import userRoutes from "./routes/user.routes.js";
 import pedidosRoutes from "./routes/pedidos.routes.js";
 import clientRoutes from "./routes/client.routes.js";
+import productsRoutes from "./routes/products.routes.js";
 import repartidorRoutes from "./routes/repartidor.routes.js";
 import cookieParser from "cookie-parser";
 
@@ -28,6 +29,7 @@ app.use("/api", userRoutes);
 app.use("/api", pedidosRoutes);
 app.use("/api", clientRoutes);
 app.use("/api", repartidorRoutes);
+app.use("/api", productsRoutes);
 
 app.use((req, res, next) => {
   res.status(404).json({

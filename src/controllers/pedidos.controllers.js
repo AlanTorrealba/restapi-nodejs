@@ -35,7 +35,6 @@ export const postPedidos = async (req, res) => {
       message: "Pedido creado exitosamente",
     });
   } catch (error) {
-    console.error("Error en la inserción:", error);
     return res.status(500).json({
       success: false,
       message: "Somethin goes wrong",
