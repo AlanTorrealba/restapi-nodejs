@@ -19,8 +19,6 @@ export const getDetalles = async (req, res) => {
 };
 export const postDetalles = async (req, res) => {
   const { pedidoId, products, cantidad } = req.body.params;
-  console.log(pedidoId, products, cantidad);
-
   try {
     // Insertar el detalle del pedido con subconsulta para obtener el precio_unitario
     const [rows] = await pool.query(
@@ -47,8 +45,8 @@ export const patchDetalles = async (req, res) => {
   try {
     const id = req.params.id;
     const [result] = await pool.query(
-      "UPDATE Pedidos SET estatus = ?, estatus_pedido = ? WHERE pedido_id = ?",
-      [1, "Nuevo", id]
+      "UPDATE detallespedido SET estatus = ? WHERE detalle_id = ?",
+      [1, id]
     );
 
     if (result.affectedRows <= 0) {
@@ -68,17 +66,17 @@ export const deleteDetalles = async (req, res) => {
   try {
     const id = req.params.id;
     const [result] = await pool.query(
-      "UPDATE Pedidos SET estatus = ?, estatus_pedido = ? WHERE pedido_id = ?",
-      [0, "eliminado", id]
+      "UPDATE detallespedido SET estatus = ? WHERE detalle_id = ?",
+      [0, id]
     );
 
     if (result.affectedRows <= 0) {
       return res.status(404).json({
-        message: "Pedido not found",
+        message: "Detalle not found",
       });
     }
 
-    res.json("Pedido eliminado exitosamente");
+    res.json("Detalle eliminado exitosamente");
   } catch (error) {
     return res.status(500).json({
       message: "Something went wrong",
