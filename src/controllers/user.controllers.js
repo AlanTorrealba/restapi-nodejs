@@ -8,7 +8,7 @@
     const password = req.query.password;
     try {
       const [rows] = await pool.query("SELECT * FROM usuarios where nombre = ? and contrasena = ?", [user, password ]);
-      rows != [] ? res.json(rows) : res.json(false);
+      rows != [] ? res.json(rows) : res.json("401");
       
     } catch (error) {
       return res.status(500).json({
@@ -18,7 +18,7 @@
   };
   export const loginUser = async (req, res) => {
     const { username, password } = req.body;
-
+   
     if (username === "alan" && password === "1234") {
       //aqui guardo la variable para devolverla al front
       const token = jwt.sign(
