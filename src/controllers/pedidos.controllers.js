@@ -5,6 +5,7 @@ export const getPedidos = async (req, res) => {
       SELECT
       Pedidos.pedido_id,
       Clientes.nombre AS nombre_cliente,
+      Pedidos.cliente_id as cliente_id,
       Usuarios.nombre AS nombre_usuario,
       Repartidores.nombre AS nombre_repartidor,
       Pedidos.estatus_pedido,
